@@ -73,6 +73,7 @@ def patch_secret(name):
     
     new_encrypted_secret = encrypt_secret(new_secret, key)
     update_secret_encryption(current_user, name, new_encrypted_secret, key_id)
+    
     return jsonify({"msg": "Secret updated"}), 200
 
 
@@ -82,4 +83,5 @@ def rotate_key():
     current_user = get_jwt_identity()
     new_key = generate_key()
     rotate_user_key(current_user, new_key)
+
     return jsonify({"msg": "Key rotated successfully"})

@@ -13,12 +13,11 @@ def register():
 
     username = data['username']
     password = data['password']
-    key = generate_key()
-    hashed_password = create_hash(password)
-
     if get_user_by_username(username):
         return jsonify({"msg": "User already exists"}), 400
     
+    key = generate_key()
+    hashed_password = create_hash(password)
     insert_user(username, hashed_password, key)
     return jsonify({"msg": "User registered"}), 201
     
@@ -31,7 +30,6 @@ def login():
     
     username = data['username']
     password = data['password']
-
     user = get_user_by_username(username)
     if user and check_hash(password, user[1]):
         token = create_access_token(identity=username)
